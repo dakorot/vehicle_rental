@@ -41,16 +41,16 @@ public class Motorcycle extends Vehicle {
                 .toString();
     }
 
-    private String findCategory(int id) {
+    private String findCategory(String id) {
         for(Motorcycle moto : motorcycles) {
-            if(moto.id == id)
+            if(moto.id.equals(id))
                 return moto.category;
         }
         return "";
     }
 
     public static class Builder {
-        private final int id;
+        private final String id;
         private final String brand;
         private final String model;
         private final int year;
@@ -58,7 +58,7 @@ public class Motorcycle extends Vehicle {
         private final boolean rented;
         private final String category;
 
-        public Builder(int id, String brand, String model, int year, double price, boolean rented, String category) {
+        public Builder(String id, String brand, String model, int year, double price, boolean rented, String category) {
             this.id = id;
             this.brand = brand;
             this.model = model;
@@ -80,5 +80,14 @@ public class Motorcycle extends Vehicle {
         price = builder.price;
         rented = builder.rented;
         category = builder.category;
+    }
+
+    public Motorcycle(Motorcycle other) {
+        this.brand = other.brand;
+        this.model = other.model;
+        this.year = other.year;
+        this.price = other.price;
+        this.rented = other.rented;
+        this.category = other.category;
     }
 }

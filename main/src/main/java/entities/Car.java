@@ -39,14 +39,14 @@ public class Car extends Vehicle {
     }
 
     public static class Builder {
-        private final int id;
+        private final String id;
         private final String brand;
         private final String model;
         private final int year;
         private final double price;
         private final boolean rented;
 
-        public Builder(int id, String brand, String model, int year, double price, boolean rented) {
+        public Builder(String id, String brand, String model, int year, double price, boolean rented) {
             this.id = id;
             this.brand = brand;
             this.model = model;
@@ -67,5 +67,23 @@ public class Car extends Vehicle {
         year = builder.year;
         price = builder.price;
         rented = builder.rented;
+    }
+
+    public Car(String id, String brand, String model, int year, double price, boolean rented) {
+        this.id = id;
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+        this.price = price;
+        this.rented = rented;
+    }
+
+    public Car(Car other) {
+        this.id = other.id;
+        this.brand = other.brand;
+        this.model = other.model;
+        this.year = other.year;
+        this.price = other.price;
+        this.rented = other.rented;
     }
 }

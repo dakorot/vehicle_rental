@@ -2,9 +2,9 @@ package entities;
 
 import java.util.List;
 
-public interface VehicleRepository {
+public interface IVehicleRepository {
     public void rentVehicle(Vehicle vehicle);
-    public Vehicle returnVehicle(int id);
+    public Vehicle returnVehicle(String id);
     public List<Vehicle> getVehicles();
     public void save();
     public void load();

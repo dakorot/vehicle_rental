@@ -4,10 +4,14 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VehicleRepositoryImpl implements VehicleRepository {
+public class VehicleRepositoryImpl implements IVehicleRepository {
     private final String SEPARATOR = ";";
     List<Car> cars = new ArrayList<>();
     List<Motorcycle> motorcycles = new ArrayList<>();
+
+    public VehicleRepositoryImpl() {
+        load();
+    }
 
     @Override
     public void rentVehicle(Vehicle vehicle) {
@@ -15,15 +19,15 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     }
 
     @Override
-    public Vehicle returnVehicle(int id) {
+    public Vehicle returnVehicle(String id) {
         for(int i=0; i<cars.size(); ++i) {
-            if(cars.get(i).id == id) {
+            if(cars.get(i).id.equals(id)) {
                 return cars.get(i);
             }
         }
 
         for(int i=0; i<motorcycles.size(); ++i) {
-            if(motorcycles.get(i).id == id) {
+            if(motorcycles.get(i).id.equals(id)) {
                 return motorcycles.get(i);
             }
         }
@@ -34,8 +38,14 @@ public class VehicleRepositoryImpl implements VehicleRepository {
     @Override
     public List<Vehicle> getVehicles() {
         List<Vehicle> vehicles = new ArrayList<>();
-        vehicles.addAll(cars);
-        vehicles.addAll(motorcycles);
+
+        for (Car car : cars) {
+            vehicles.add(new Car(car));
+        }
+
+        for (Motorcycle m : motorcycles) {
+            vehicles.add(new Motorcycle(m));
+        }
 
         return vehicles;
     }
@@ -71,11 +81,11 @@ public class VehicleRepositoryImpl implements VehicleRepository {
             while((line = br.readLine()) != null) {
                 String[] values = line.split(SEPARATOR);
                     if(values[0].charAt(0) == 'C') {
-                        Car car = new Car.Builder(Integer.parseInt(values[1]), values[2], values[3], Integer.parseInt(values[4]), Double.parseDouble(values[5]), Boolean.parseBoolean(values[6])).build();
+                        Car car = new Car.Builder(values[1], values[2], values[3], Integer.parseInt(values[4]), Double.parseDouble(values[5]), Boolean.parseBoolean(values[6])).build();
                         cars.add(car);
                     }
                     else {
-                        Motorcycle motorcycle = new Motorcycle.Builder(Integer.parseInt(values[1]), values[2], values[3], Integer.parseInt(values[4]), Double.parseDouble(values[5]), Boolean.parseBoolean(values[6]), values[7]).build();
+                        Motorcycle motorcycle = new Motorcycle.Builder(values[1], values[2], values[3], Integer.parseInt(values[4]), Double.parseDouble(values[5]), Boolean.parseBoolean(values[6]), values[7]).build();
                         motorcycles.add(motorcycle);
                     }
                 }
